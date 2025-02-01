@@ -5,7 +5,7 @@ import { InfrastructureModule } from './infrastructure/infrastructure.module';
 import { NewsModule } from './news/news.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), InfrastructureModule, NewsModule],
+  imports: [ConfigModule.forRoot(), InfrastructureModule],
   providers: [AppService],
 })
 export class AppModule {}

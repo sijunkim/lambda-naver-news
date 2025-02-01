@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { RedisService } from './infrastructure/redis.service';
+import { RedisService } from './infrastructure/redis/redis.service';
 
 async function bootstrap() {
   const app = await NestFactory.createApplicationContext(AppModule);
