@@ -23,6 +23,10 @@ export class RedisConfig implements ConfigInterface<RedisInterface> {
     };
   }
 
+  /**
+   * Redis 연결에 필요한 환경 변수들의 유효성을 검사합니다.
+   * @throws {Error} 필수 환경 변수(REDIS_HOST, REDIS_PORT, REDIS_PASSWORD)가 없는 경우 에러를 발생시킵니다.
+   */
   validateConfig(): void {
     const requiredEnvVars = ['REDIS_HOST', 'REDIS_PORT', 'REDIS_PASSWORD'];
     const missingVars = requiredEnvVars.filter((varName) => !this.configService.get(varName));

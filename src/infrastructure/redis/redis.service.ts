@@ -18,8 +18,8 @@ export class RedisService implements OnModuleDestroy {
    * @param configService - NestJS 설정 서비스
    */
   constructor(private readonly configService: RedisConfig) {
-    const config = this.configService.getConfig();
-    this.redis = this.createRedisClient(config);
+    const redisConfig = this.configService.getConfig();
+    this.redis = this.createRedisClient(redisConfig);
     this.valueRetrievers = this.initializeValueRetrievers();
   }
 
