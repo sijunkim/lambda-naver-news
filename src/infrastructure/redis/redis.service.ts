@@ -1,8 +1,8 @@
 import { Injectable, OnModuleDestroy } from '@nestjs/common';
 import { Redis } from 'ioredis';
-import { ConfigService } from '@nestjs/config';
-import { RedisDataType, RedisAnalysis, RedisConfig } from './redis.interface';
-
+import { RedisDataType } from '../../common/types/redis.enum';
+import { RedisAnalysis, RedisInterface } from '../../common/interfaces/redis.interface';
+import { RedisConfig } from 'src/config/redis.config';
 /**
  * Redis 작업을 처리하는 서비스 클래스
  * Redis 연결 관리 및 데이터 분석 기능을 제공합니다.
@@ -17,31 +17,10 @@ export class RedisService implements OnModuleDestroy {
    * Redis 클라이언트를 초기화하고 값 조회 함수들을 설정합니다.
    * @param configService - NestJS 설정 서비스
    */
-  constructor(private readonly configService: ConfigService) {
-    const config = this.getRedisConfig();
+  constructor(private readonly configService: RedisConfig) {
+    const config = this.configService.getConfig();
     this.redis = this.createRedisClient(config);
     this.valueRetrievers = this.initializeValueRetrievers();
-  }
-
-  /**
-   * Redis 연결 설정을 환경 변수에서 가져옵니다.
-   * @throws {Error} 필수 환경 변수가 없는 경우 에러를 발생시킵니다.
-   * @returns {RedisConfig} Redis 연결 설정 객체
-   */
-  private getRedisConfig(): RedisConfig {
-    const requiredEnvVars = ['REDIS_HOST', 'REDIS_PORT', 'REDIS_PASSWORD'];
-    const missingVars = requiredEnvVars.filter((varName) => !this.configService.get(varName));
-
-    if (missingVars.length > 0) {
-      throw new Error(`Missing required Redis environment variables: ${missingVars.join(', ')}`);
-    }
-
-    return {
-      host: this.configService.get('REDIS_HOST') || '',
-      port: Number(this.configService.get('REDIS_PORT')) || 0,
-      password: this.configService.get('REDIS_PASSWORD') || '',
-      username: this.configService.get('REDIS_USERNAME') || '',
-    };
   }
 
   /**
@@ -49,7 +28,7 @@ export class RedisService implements OnModuleDestroy {
    * @param config - Redis 연결 설정
    * @returns {Redis} Redis 클라이언트 인스턴스
    */
-  private createRedisClient(config: RedisConfig): Redis {
+  private createRedisClient(config: RedisInterface): Redis {
     return new Redis(config);
   }
 
