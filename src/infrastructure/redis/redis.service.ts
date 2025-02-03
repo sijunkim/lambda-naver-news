@@ -1,8 +1,8 @@
 import { Injectable, OnModuleDestroy } from '@nestjs/common';
 import { Redis } from 'ioredis';
+import { RedisConfig } from '../../config/redis.config';
 import { RedisDataType } from '../../common/types/redis.enum';
 import { RedisAnalysis, RedisInterface } from '../../common/interfaces/redis.interface';
-import { RedisConfig } from 'src/config/redis.config';
 /**
  * Redis 작업을 처리하는 서비스 클래스
  * Redis 연결 관리 및 데이터 분석 기능을 제공합니다.
