@@ -14,6 +14,9 @@ export class SlackService {
     return 'Hello World!';
   }
 
+  /**
+   * 뉴스 발송
+   */
   async newsSend() {
     const webhook = new IncomingWebhook(this.slackConfig.developWebhookUrl);
     await webhook.send('TEST');
